@@ -52,10 +52,17 @@ class Generator:
                 max_new_tokens=100,
                 do_sample=False
             )
-
         answer = self.tokenizer.decode(
             output[0],
             skip_special_tokens=True
         )
 
-        return answer
+        pages = []
+        for result in results[:3]:
+            if result["page"] not in pages:
+                pages.append(result["page"])
+
+        return {
+            "answer": answer,
+            "sources": pages
+        }
