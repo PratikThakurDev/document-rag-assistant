@@ -5,13 +5,15 @@ from rank_bm25 import BM25Okapi
 
 class Retriever:
     def __init__(self, model_name="all-MiniLM-L6-v2"):
-        self.embedding_model = SentenceTransformer(model_name)
+        self.embedding_model = SentenceTransformer(model_name,device="cpu")
         self.index = None
         self.chunks = None
         self.bm25 = None
         self.reranker = CrossEncoder(
-            "cross-encoder/ms-marco-MiniLM-L6-v2"
+            "cross-encoder/ms-marco-MiniLM-L6-v2",
+            device="cpu"
         )
+        
     def build_index(self, chunks):
         self.chunks = chunks
 
@@ -208,7 +210,16 @@ class Retriever:
         elif q.startswith(("compare", "difference between", "distinguish")):
             return "comparison"
 
+        elif q.startswith((
+            "what are the properties",
+            "what properties",
+            "list the properties"
+        )):
+            return "properties"
+
         return "general"
+
+
 
 
     def intent_bonus(self, intent, text):
