@@ -3,6 +3,10 @@
 A local Retrieval-Augmented Generation (RAG) application that allows
 users to upload PDF documents and ask questions grounded in their content.
 
+## Application Preview
+
+![Document RAG Assistant](screenshots/app-demo.png)
+
 ## Features
 
 - PDF text extraction using PyMuPDF
